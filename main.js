@@ -8,7 +8,7 @@
 // Game values
 let min = 1,
 	max = 10,
-	winningNum = 2, // for testing purposes only, will be random
+	winningNum = getRandomNumber(min, max),
 	guessesLeft = 3;
 
 // UI elements
@@ -65,6 +65,11 @@ guessBtn.addEventListener('click', () => {
 		}
 	}
 });
+
+// Get winning number
+function getRandomNumber(min, max) {
+	return Math.floor(Math.random() * (max - min + 1) + min);
+}
 
 // Game over
 function gameOver(win, message) {
