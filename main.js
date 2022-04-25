@@ -23,6 +23,13 @@ const gameWrap = document.querySelector('#game'),
 minNum.textContent = min;
 maxNum.textContent = max;
 
+// Add event listener for play again
+gameWrap.addEventListener('mousedown', (e) => {
+	if (e.target.className === 'play-again') {
+		window.location.reload();
+	}
+});
+
 // Add event listener for button
 guessBtn.addEventListener('click', () => {
 	let guess = parseInt(guessValue.value);
@@ -32,31 +39,24 @@ guessBtn.addEventListener('click', () => {
 		setMessage(`Please enter a number between ${min} and ${max}`, 'red');
 	}
 
-	// Check if winning number
 	if (guess === winningNum) {
 		// Game over - win case
-		// Disable input
-		guessValue.disabled = true;
-		// Change border to green
-		guessValue.style.borderColor = 'green';
-		// Set winning message
-		setMessage(`You win! ${winningNum} is correct! `, 'green');
+		gameOver(true, `You win! ${winningNum} is correct!`);
 	} else {
 		// Wrong number
 		guessesLeft -= 1;
 
 		if (guessesLeft === 0) {
 			// Game over - lose case
-			// Disable input
-			guessValue.disabled = true;
-			// Change border to red
-			guessValue.style.borderColor = 'red';
-			// Set losing message
-			setMessage(`You lose! The correct answer is ${winningNum}`, 'red');
+			gameOver(false, `You lose! The correct answer is ${winningNum}`);
 		} else {
 			// Game continues - answer wrong
 			// Change border to red
 			guessValue.style.borderColor = 'red';
+
+			// Clear input
+			guessValue.value = '';
+
 			// Set warning message
 			setMessage(
 				`${guess} is incorrect! You have ${guessesLeft} guess(es) left`,
@@ -65,6 +65,27 @@ guessBtn.addEventListener('click', () => {
 		}
 	}
 });
+
+// Game over
+function gameOver(win, message) {
+	let color;
+
+	// Clear input
+	guessValue.value = '';
+
+	// Disable input
+	guessValue.disabled = true;
+
+	color = win ? 'green' : 'red';
+	guessValue.style.borderColor = color;
+
+	// Set winning message
+	setMessage(message, color);
+
+	// Play again
+	guessBtn.value = 'Play Again';
+	guessBtn.className += 'play-again';
+}
 
 // Set a message
 function setMessage(message, color) {
