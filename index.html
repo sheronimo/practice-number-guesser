@@ -15,5 +15,22 @@
 		/>
 		<script defer src="main.js"></script>
 	</head>
-	<body></body>
+	<body>
+		<div class="container">
+			<h1>Number Guesser</h1>
+			<div id="game">
+				<p>
+					Guess a number between <span id="min-num">1</span> and
+					<span id="max-num">10</span>.
+				</p>
+				<input
+					type="number"
+					id="guess-input"
+					placeholder="Enter your guess..."
+				/>
+				<input type="submit" value="Submit" id="guess-value" />
+				<p id="result-message"></p>
+			</div>
+		</div>
+	</body>
 </html>
